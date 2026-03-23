@@ -1,0 +1,68 @@
+{
+  "name": "@hiero/keeper",
+  "version": "0.1.0",
+  "description": "TypeScript automation toolkit for Hiero/Hedera networks — scheduled transactions, mirror node queries, HCS subscriptions, and more.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest --run",
+    "test:coverage": "vitest --run --coverage"
+  },
+  "keywords": [
+    "hiero",
+    "hedera",
+    "hashgraph",
+    "keeper",
+    "scheduled-transactions",
+    "mirror-node",
+    "hcs",
+    "automation",
+    "sdk"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hiero-ledger/hiero-keeper-sdk.git"
+  },
+  "dependencies": {
+    "@hashgraph/sdk": "^2.58.0",
+    "ethers": "^6.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.0",
+    "eslint": "^9.15.0",
+    "@eslint/js": "^9.15.0",
+    "typescript-eslint": "^8.15.0",
+    "typescript": "^5.7.0",
+    "tsup": "^8.3.0",
+    "vitest": "^2.1.0",
+    "fast-check": "^3.22.0",
+    "@vitest/coverage-v8": "^2.1.0"
+  }
+}
