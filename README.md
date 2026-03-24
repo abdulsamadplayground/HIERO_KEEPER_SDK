@@ -266,12 +266,28 @@ npm install
 ### Full Verification (all checks in one go)
 
 ```bash
-# Using Git Bash on Windows, or any bash shell on macOS/Linux
+# 1. Copy .env.example and fill in your Hedera testnet credentials
+cp .env.example .env
+# Edit .env with your HEDERA_OPERATOR_ID, HEDERA_OPERATOR_KEY, etc.
+
+# 2. Run the verification script (Git Bash on Windows, or any bash shell)
 chmod +x demo.sh
 ./demo.sh
 ```
 
-The [`demo.sh`](./demo.sh) script runs 17 verification steps: environment check, dependency install, lint, typecheck, per-module test suites, full test suite, coverage report, production build, and package metadata validation. Each step includes [HashScan](https://hashscan.io/testnet) links for on-chain verification.
+The [`demo.sh`](./demo.sh) script runs 9 verification steps:
+
+1. Environment & dependency check
+2. ESLint (typescript-eslint strict)
+3. TypeScript type checking (`tsc --noEmit`)
+4. Per-module unit tests (10 suites, 114 tests including property-based)
+5. Coverage report (V8 provider)
+6. Production build (CJS + ESM + DTS via tsup)
+7. Package metadata validation
+8. Live testnet verification (topic + account via Mirror Node, optional)
+9. HashScan quick-reference with your actual entity links
+
+The script loads credentials from `.env`, uses project-local binaries (no global installs needed), and includes interactive prompts for the live testnet steps.
 
 ### Build Output
 
@@ -617,6 +633,7 @@ npx vitest --run src/retry-policy.test.ts
 │   ├── contract-automation.ts      # Job creation + event decoding
 │   └── resilient-transfers.ts      # Retry-wrapped transfers
 ├── .github/workflows/ci.yml        # CI: lint + typecheck + test + DCO check
+├── .env.example                     # Environment variable template
 ├── demo.sh                         # Full SDK verification script
 ├── package.json                    # Package config with dual CJS/ESM exports
 ├── tsconfig.json                   # TypeScript strict config
