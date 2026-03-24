@@ -31,6 +31,7 @@ TypeScript automation toolkit for Hiero/Hedera networks — scheduled transactio
 - [Examples](#examples)
 - [Testing](#testing)
 - [Project Structure](#project-structure)
+- [Live Dashboard](#live-dashboard)
 - [Contributing](#contributing)
 
 ---
@@ -640,8 +641,39 @@ npx vitest --run src/retry-policy.test.ts
 ├── tsup.config.ts                  # Build config (CJS + ESM + DTS)
 ├── vitest.config.ts                # Test runner config
 ├── eslint.config.js                # ESLint + typescript-eslint strict
+├── web/                             # Next.js dashboard (deployed on Vercel)
+│   ├── src/app/page.tsx             # Dashboard UI with live Hedera data
+│   ├── src/app/api/                 # API routes (network, account, topic, transactions)
+│   └── src/lib/hedera.ts            # Shared mirror node helpers
 ├── CONTRIBUTING.md                 # Dev setup, PR process, DCO sign-off
 └── README.md                       # This file
+```
+
+---
+
+## Live Dashboard
+
+A Next.js dashboard is deployed on Vercel that queries the Hedera testnet mirror node in real time:
+
+🔗 **https://web-seven-liard-92.vercel.app**
+
+The dashboard displays:
+
+- Network status and latest block number
+- Operator account balance (ℏ and tinybar)
+- HCS topic message count and message history
+- Recent transactions with type, result, and HashScan verification links
+- Auto-refresh every 15 seconds
+
+Source code is in the [`web/`](./web) directory. It uses 4 API routes (`/api/network`, `/api/account`, `/api/topic`, `/api/transactions`) that proxy the Hedera Mirror Node REST API.
+
+To run locally:
+
+```bash
+cd web
+npm install
+# Set HEDERA_OPERATOR_ID, HEDERA_NETWORK, HEDERA_TOPIC_ID, HEDERA_MIRROR_NODE_URL in web/.env
+npm run dev
 ```
 
 ---
